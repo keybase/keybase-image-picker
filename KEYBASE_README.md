@@ -16,3 +16,7 @@ The Update flow:
 1. Update `keybase/expo` as you normally would.
 1. Inside `keybase/keybase-image-picker`, set `git remote add upstream git@github.com:keybase/expo.git`
 1. Inside `keybase/keybase-image-picker`, run `git pull upstream keybase-image-picker:master`
+
+### Useful links
+
+https://git-memo.readthedocs.io/en/latest/subtree.html
