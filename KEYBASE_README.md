@@ -13,9 +13,9 @@ Some important points:
 
 The Update flow:
 
-1. Update `keybase/expo` as you normally would.
-1. Inside `keybase/keybase-image-picker`, set `git remote add upstream git@github.com:keybase/expo.git`
-1. Inside `keybase/keybase-image-picker`, run `git pull upstream keybase-image-picker:master`
+1. Update `keybase/expo#keybase-image-picker-full` as you normally would.
+1. Inside `keybase/expo#keybase-image-picker-full`, run `git remote add keybase-image-picker git@github.com:keybase/keybase-image-picker.git`.
+1. Inside `keybase/expo#keybase-image-picker-full`, run `git subtree push --prefix=packages/expo-image-picker keybase-image-picker master`. This pushes the changes in the expo repo to the keybase-image-picker sub tree repo to the given `<feature-branch>`
 
 ### Useful links
 
