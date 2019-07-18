@@ -29,6 +29,7 @@ import org.unimodules.core.Promise;
 import org.unimodules.core.interfaces.ActivityEventListener;
 import org.unimodules.core.interfaces.ActivityProvider;
 import org.unimodules.core.interfaces.ExpoMethod;
+import org.unimodules.core.interfaces.ModuleRegistryConsumer;
 import org.unimodules.core.interfaces.services.UIManager;
 import org.unimodules.interfaces.imageloader.ImageLoader;
 import org.unimodules.interfaces.permissions.Permissions;
@@ -47,7 +48,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-public class ImagePickerModule extends ExportedModule implements ActivityEventListener {
+public class ImagePickerModule extends ExportedModule implements ModuleRegistryConsumer, ActivityEventListener {
 
   public static final String TAG = "ExponentImagePicker";
   public static final String MISSING_ACTIVITY = "MISSING_ACTIVITY";
@@ -720,7 +721,7 @@ public class ImagePickerModule extends ExportedModule implements ActivityEventLi
   }
 
   @Override
-  public void onCreate(ModuleRegistry moduleRegistry) {
+  public void setModuleRegistry(ModuleRegistry moduleRegistry) {
     mModuleRegistry = moduleRegistry;
     mImageLoader = moduleRegistry.getModule(ImageLoader.class);
   }
