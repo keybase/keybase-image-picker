@@ -400,7 +400,7 @@ public class ImagePickerModule extends ExportedModule implements ModuleRegistryC
         try {
           final Uri uri = requestCode == REQUEST_LAUNCH_CAMERA ? mCameraCaptureURI : intent.getData();
           final Bundle exifData = exif ? readExif(uri, promise) : null;
-          final String originalFilename = getFileName(uri)
+          final String originalFilename = getFileName(uri);
 
           if (getExperienceActivity() == null) {
             promise.reject(MISSING_ACTIVITY, MISSING_ACTIVITY_MESSAGE);
@@ -605,7 +605,7 @@ public class ImagePickerModule extends ExportedModule implements ModuleRegistryC
         return;
       }
     }
-    returnImageResult(exifData, result.getUri().toString(), getFileName(result.getUri()) width, height, out, promise);
+    returnImageResult(exifData, result.getUri().toString(), getFileName(result.getUri()), width, height, out, promise);
   }
 
   private void returnImageResult(Bundle exifData, String uri, String originalFilename, int width, int height,
