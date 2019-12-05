@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.media.ExifInterface;
 import android.support.v4.content.FileProvider;
+import android.provider.OpenableColumns;
 import android.util.Base64;
 import android.webkit.MimeTypeMap;
 
@@ -618,6 +620,7 @@ public class ImagePickerModule extends ExportedModule implements ModuleRegistryC
       response.putBundle("exif", exifData);
     }
     response.putBoolean("cancelled", false);
+    response.putString("type", "image");
     response.putString("originalFilename", getFileName(Uri.parse(uri)));
     promise.resolve(response);
   }
