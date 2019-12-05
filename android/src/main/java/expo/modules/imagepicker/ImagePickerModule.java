@@ -400,6 +400,7 @@ public class ImagePickerModule extends ExportedModule implements ModuleRegistryC
         try {
           final Uri uri = requestCode == REQUEST_LAUNCH_CAMERA ? mCameraCaptureURI : intent.getData();
           final Bundle exifData = exif ? readExif(uri, promise) : null;
+          final String originalFilename = getFileName(uri)
 
           if (getExperienceActivity() == null) {
             promise.reject(MISSING_ACTIVITY, MISSING_ACTIVITY_MESSAGE);
@@ -484,14 +485,14 @@ public class ImagePickerModule extends ExportedModule implements ModuleRegistryC
                   // We have an image and should compress its quality
                   if (quality != null) {
                     saveImage(bitmap, finalCompressFormat, file, out);
-                    returnImageResult(exifData, file.toURI().toString(), width, height, out, promise);
+                    returnImageResult(exifData, file.toURI().toString(), originalFilename, width, height, out, promise);
                     return;
                   }
 
                   // No modification requested
                   try {
                     copyImage(uri, file, out);
-                    returnImageResult(exifData, file.toURI().toString(), width, height, out, promise);
+                    returnImageResult(exifData, file.toURI().toString(), originalFilename, width, height, out, promise);
                   } catch (IOException e) {
                     promise.reject("E_COPY_ERR", "Could not copy image from " + uri + ": " + e.getMessage(), e);
                   }
@@ -604,10 +605,10 @@ public class ImagePickerModule extends ExportedModule implements ModuleRegistryC
         return;
       }
     }
-    returnImageResult(exifData, result.getUri().toString(), width, height, out, promise);
+    returnImageResult(exifData, result.getUri().toString(), getFileName(result.getUri()) width, height, out, promise);
   }
 
-  private void returnImageResult(Bundle exifData, String uri, int width, int height,
+  private void returnImageResult(Bundle exifData, String uri, String originalFilename, int width, int height,
                                  ByteArrayOutputStream base64OutputStream, Promise promise) {
     Bundle response = new Bundle();
     response.putString("uri", uri);
