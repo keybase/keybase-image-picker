@@ -618,8 +618,30 @@ public class ImagePickerModule extends ExportedModule implements ModuleRegistryC
       response.putBundle("exif", exifData);
     }
     response.putBoolean("cancelled", false);
-    response.putString("type", "image");
+    response.putString("originalFilename", getFileName(Uri.parse(uri)));
     promise.resolve(response);
+  }
+
+  private String getFileName(Uri uri) {
+    String result = null;
+    if (uri.getScheme().equals("content")) {
+      Cursor cursor = this.getExperienceActivity().getContentResolver().query(uri, null, null, null, null);
+      try {
+        if (cursor != null && cursor.moveToFirst()) {
+          result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+        }
+      } finally {
+        cursor.close();
+      }
+    }
+    if (result == null) {
+      result = uri.getPath();
+      int cut = result.lastIndexOf('/');
+      if (cut != -1) {
+        result = result.substring(cut + 1);
+      }
+    }
+    return result;
   }
 
   private void writeImage(Bitmap image, String path, Bitmap.CompressFormat compressFormat) {
