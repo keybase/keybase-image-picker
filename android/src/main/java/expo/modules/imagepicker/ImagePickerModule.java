@@ -622,7 +622,7 @@ public class ImagePickerModule extends ExportedModule implements ModuleRegistryC
     }
     response.putBoolean("cancelled", false);
     response.putString("type", "image");
-    response.putString("originalFilename", getFileName(Uri.parse(uri)));
+    response.putString("originalFilename", originalFilename);
     promise.resolve(response);
   }
 
